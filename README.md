@@ -34,7 +34,8 @@ then start the API:
   flask run
 ```
 To use the api, import the ```ssys.postman_collection.json``` on Postman, then on Postman:
-Register -> Login 
+Register -> Login
+
 Copy the token generated and use as Bearer token to make requests to the API
 
 
