@@ -4,7 +4,7 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@172.17.0.3/flask_jwt'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/ssys_challenge'
 app.config['SECRET_KEY'] = 'secret'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
