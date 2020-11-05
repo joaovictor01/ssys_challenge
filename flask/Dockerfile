@@ -5,7 +5,8 @@ FROM python:3.8
 RUN apt update && \
     apt install -y netcat-openbsd && \
     apt install -y gunicorn && \
-    apt install -y uwsgi
+    apt install -y uwsgi && \
+    apt install -y uwsgi-plugin-python3
 
 ENV INSTALL_PATH /api
 RUN mkdir -p $INSTALL_PATH
