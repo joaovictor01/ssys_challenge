@@ -44,12 +44,14 @@ services:
     image: mariadb:10.4
     ports:
       - "3306:3306"
+    expose:
+      - 3306
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_USER: root
       MYSQL_PASSWORD: root
-      MYSQL_DATABASE: syss_challenge
+      MYSQL_DATABASE: ssys_challenge
     networks:
       - my-network
 
