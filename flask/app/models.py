@@ -44,7 +44,6 @@ class Employee(db.Model):
         self.department = department
         self.salary = salary
         self.birth_date = datetime.strptime(birth_date, '%d-%m-%Y')
-        # self.birth_date = birth_date
 
     def __repr__(self):
         return f"<User : {self.name} >"

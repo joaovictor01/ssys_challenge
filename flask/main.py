@@ -58,7 +58,7 @@ def login():
 
     payload = {
         "id": user.id,
-        # token expira em 10 minutos
+        # token expires every 10 minutes
         "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
     }
 
@@ -104,7 +104,7 @@ def update_employee(current_user, employee_id):
     employee = Employee.query.filter_by(id=employee_id).first()
 
     if not employee:
-        return jsonify({"message": "Employee not found"})
+        return jsonify({"message": "Employee not found."})
 
     employee.name = request.json['name']
     employee.email = request.json['email']
@@ -129,12 +129,12 @@ def delete_employee(current_user, employee_id):
     employee = Employee.query.filter_by(id=employee_id).first()
 
     if not employee:
-        return jsonify({"message": "Employee not found"})
+        return jsonify({"message": "Employee not found."})
 
     db.session.delete(employee)
     db.session.commit()
 
-    return jsonify({"message": "The user has been deleted."})
+    return jsonify({"message": "The employee has been deleted."})
 
 
 @app.route('/employees/<employee_id>', methods=["GET"])
@@ -143,7 +143,7 @@ def get_employee_details(current_user, employee_id):
     employee = Employee.query.filter_by(id=employee_id).first()
 
     if not employee:
-        return jsonify({"message": "Employee not found"})
+        return jsonify({"message": "Employee not found."})
 
     result = employee_share_schema.dump(
         Employee.query.filter_by(id=employee_id).first()
@@ -155,7 +155,6 @@ def get_employee_details(current_user, employee_id):
 @app.route('/reports/employees/age', methods=["GET"])
 @jwt_required
 def reports_by_age(current_user):
-    # birth_date = datetime.datetime.strptime(Employee.birth_date,'%d-%m-%Y')
     query = Employee.query.order_by(Employee.birth_date)
     result = employees_share_schema.dump(
         Employee.query.order_by(Employee.birth_date.desc())
