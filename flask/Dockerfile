@@ -1,7 +1,5 @@
 FROM python:3.8
 
-# EXPOSE 5000
-
 RUN apt update && \
     apt install -y netcat-openbsd && \
     apt install -y gunicorn && \
