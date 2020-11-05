@@ -2,7 +2,7 @@
 
 ### Dependencies
 
-Istall docker
+Install docker
 
 ### How to use
 
