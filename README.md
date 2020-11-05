@@ -2,11 +2,7 @@
 
 ### Dependencies
 
-Istall the requirements
-
-```
-pip3 install -r requirements.txt
-```
+Istall docker
 
 ### How to use
 
