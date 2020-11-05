@@ -7,3 +7,5 @@ __pycache__
 docker/
 Dockerfile
 Docker*
+db/
+
