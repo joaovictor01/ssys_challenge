@@ -36,7 +36,7 @@ class Employee(db.Model):
     # salary = db.Column(db.Numeric(precision=8, scale=2, decimal_return_scale=2),nullable=False)
     salary = db.Column(db.Float, nullable=False)
     # birth_date = db.Column(db.String(10),nullable=False)
-    birth_date = db.Column(db.DateTime(), nullable=False)
+    birth_date = db.Column(db.DateTime(100), nullable=False)
 
     def __init__(self, name, email, department, salary, birth_date):
         self.name = name
@@ -44,6 +44,7 @@ class Employee(db.Model):
         self.department = department
         self.salary = salary
         self.birth_date = datetime.strptime(birth_date, '%d-%m-%Y')
+        # self.birth_date = birth_date
 
     def __repr__(self):
         return f"<User : {self.name} >"

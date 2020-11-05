@@ -160,6 +160,7 @@ def reports_by_age(current_user):
     result = employees_share_schema.dump(
         Employee.query.order_by(Employee.birth_date.desc())
     )
+
     return jsonify(result)
 
 
