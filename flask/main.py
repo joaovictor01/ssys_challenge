@@ -53,22 +53,19 @@ def login():
 
     if not user.verify_password(password):
         return jsonify({
-            "error":"Invalid credentials!"
-        }),403
+            "error": "Invalid credentials!"
+        }), 403
 
     payload = {
-        "id":user.id,
-        "exp":datetime.datetime.utcnow() + datetime.timedelta(minutes=10) # token expira em 10 minutos
+        "id": user.id,
+        # token expira em 10 minutos
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
     }
 
     token = jwt.encode(payload, app.config['SECRET_KEY'])
 
-    return jsonify({"token":token.decode("utf-8")})
+    return jsonify({"token": token.decode("utf-8")})
 
-@app.route('/auth/protected')
-@jwt_required
-def protected():
-    return jsonify({"Message":"User logged in."})
 
 @app.route('/employees', methods=["GET"])
 @jwt_required
@@ -79,6 +76,7 @@ def get_employee_list(current_user):
 
     return jsonify(result)
 
+
 @app.route('/employees', methods=["POST"])
 @jwt_required
 def add_employee(current_user):
@@ -88,7 +86,7 @@ def add_employee(current_user):
     salary = request.json['salary']
     birth_date = request.json['birth_date']
 
-    employee = Employee(name,email,department,salary,birth_date)
+    employee = Employee(name, email, department, salary, birth_date)
 
     db.session.add(employee)
     db.session.commit()
@@ -99,20 +97,21 @@ def add_employee(current_user):
 
     return jsonify(result)
 
+
 @app.route('/employees/<employee_id>', methods=["PUT"])
 @jwt_required
-def update_employee(current_user,employee_id):
+def update_employee(current_user, employee_id):
     employee = Employee.query.filter_by(id=employee_id).first()
 
     if not employee:
-        return jsonify({"message":"Employee not found"})
+        return jsonify({"message": "Employee not found"})
 
     employee.name = request.json['name']
     employee.email = request.json['email']
     employee.department = request.json['department']
     employee.salary = request.json['salary']
     employee.birth_date = request.json['birth_date']
-    
+
     db.session.merge(employee)
     db.session.flush()
     db.session.commit()
@@ -123,32 +122,35 @@ def update_employee(current_user,employee_id):
 
     return jsonify(result)
 
+
 @app.route('/employees/<employee_id>', methods=["DELETE"])
 @jwt_required
-def delete_employee(current_user,employee_id):
+def delete_employee(current_user, employee_id):
     employee = Employee.query.filter_by(id=employee_id).first()
 
     if not employee:
-        return jsonify({"message":"Employee not found"})
-    
+        return jsonify({"message": "Employee not found"})
+
     db.session.delete(employee)
     db.session.commit()
 
-    return jsonify({"message":"The user has been deleted."})
+    return jsonify({"message": "The user has been deleted."})
+
 
 @app.route('/employees/<employee_id>', methods=["GET"])
 @jwt_required
-def get_employee_details(current_user,employee_id):
+def get_employee_details(current_user, employee_id):
     employee = Employee.query.filter_by(id=employee_id).first()
 
     if not employee:
-        return jsonify({"message":"Employee not found"})
+        return jsonify({"message": "Employee not found"})
 
     result = employee_share_schema.dump(
         Employee.query.filter_by(id=employee_id).first()
     )
 
     return jsonify(result)
+
 
 @app.route('/reports/employees/age', methods=["GET"])
 @jwt_required
@@ -160,6 +162,7 @@ def reports_by_age(current_user):
     )
     return jsonify(result)
 
+
 @app.route('/reports/employees/salary', methods=["GET"])
 @jwt_required
 def reports_by_salary(current_user):
@@ -169,7 +172,6 @@ def reports_by_salary(current_user):
     )
     return jsonify(result)
 
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
-
-
