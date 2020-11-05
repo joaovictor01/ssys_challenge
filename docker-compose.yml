@@ -1,0 +1,59 @@
+version: "3.7"
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./nginx/
+    restart: always
+    depends_on:
+      - api
+    links:
+      - api
+    ports:
+      - "80:80"
+    networks:
+      - my-network
+
+  api:
+    container_name: 'api'
+    # command: gunicorn --bind 0.0.0.0:8080 --workers 4 "main:app"
+    # command: flask run --host=0.0.0.0
+    volumes:
+      - "./flask:/api"
+    depends_on:
+      - db
+    links:
+      - db
+    env_file:
+      - ".env"
+    build: ./flask
+    # ports:
+    #   - 5000:5000
+    expose:
+      - 8080
+    restart: always
+    networks:
+      my-network:
+        aliases:
+          - flask-app
+    environment: 
+      - FLASK_ENV=production
+      - FLASK_APP=/api/main.py
+
+  db:
+    image: mariadb:10.4
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: syss_challenge
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    # name: my-network
+    # external: false

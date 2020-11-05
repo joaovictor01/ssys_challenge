@@ -5,7 +5,5 @@ __pycache__
 *.db
 *.txt
 docker/
-Dockerfile
-Docker*
 db/
 
